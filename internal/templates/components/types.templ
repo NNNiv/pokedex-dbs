@@ -1,0 +1,16 @@
+package components
+
+templ AdvancedSearch() {
+	<div class="grid grid-cols-2 gap-10 mt-10">
+		/*
+		@typeComponent("bg-red-500", "Fire")
+		@typeComponent("bg-blue-500", "Water")
+		@typeComponent("bg-green-500", "Grass")
+		@typeComponent("bg-purple-500", "Ghost")
+    */
+	</div>
+}
+
+templ typeComponent(color, name string) {
+	<button class={ color + " rounded-md w-24 flex justify-center" }>{ name }</button>
+}

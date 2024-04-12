@@ -1,0 +1,22 @@
+package layouts
+
+templ Layout() {
+	<title>Pokedex</title>
+	<head>
+		<link rel="stylesheet" href="static/css/style.css"/>
+	</head>
+	<script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
+	<body class="font-pkmn h-screen flex flex-col items-center bg-pkmnbg">
+		<div class="text-8xl mt-10 text-pkmnfg2 font-outline">Pokédex</div>
+		@navBar()
+	</body>
+}
+
+templ navBar() {
+	<div class="flex mt-10 text-pkmnfg">
+		<a href="/" class="px-10 py-2 hover:underline hover:italic">Home</a>
+		<a href="/who" class="px-10 py-2 hover:underline hover:italic">Who's that Pokémon?</a>
+		<a href="/surprise" class="px-10 py-2 hover:underline hover:italic">Surprise me</a>
+		<a href="/idk" class="px-10 py-2 hover:underline hover:italic">???</a>
+	</div>
+}

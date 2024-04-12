@@ -1,0 +1,5 @@
+node_modules
+tmp
+/internal/templates/**/*.go
+/static/css/style.css
+.env
