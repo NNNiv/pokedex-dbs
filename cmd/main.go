@@ -18,8 +18,10 @@ func main() {
 	app.GET("/surprise", routes.SurpriseMeHandler)
 	app.GET("/who", routes.WhoHandler)
 	app.GET("/idk", routes.IDKHandler)
+	// app.GET("/show-advanced", routes.AdvancedSearchDisplayHandler)
 
 	app.POST("/search", routes.SearchHandler)
+	app.POST("/guess", routes.GuessHandler)
 	// fmt.Println("http://localhost:4000")
 	app.Logger.Fatal(app.Start(":4000"))
 }

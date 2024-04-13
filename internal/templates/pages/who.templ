@@ -1,7 +1,53 @@
 package pages 
 
-import "github.com/NNNiv/pokedex/internal/templates/layouts"
+import (
+	"github.com/NNNiv/pokedex/internal/templates/layouts"
+	"github.com/NNNiv/pokedex/db"
+	"fmt"
+	"strconv"
+)
 
-templ Who() {
+templ Who(pokemon db.Pokemon, tries int) {
 	@layouts.Layout()
+	<div class="mt-10 text-2xl text-pkmnfg">Who's that Pokémon?</div>
+	<div id="bw-image" class="h-96 w-full flex justify-center items-center relative">
+		<div class="absolute top-0 left-0 w-full text-center py-4">
+			<div>Tries: { strconv.Itoa(tries) }</div>
+			<div class="text-fire"></div>
+		</div>
+		<img src={ fmt.Sprintf("static/assets/gen-%d/%s.png", pokemon.Gen, pokemon.Id) } alt="pokemon-image" class="filter grayscale brightness-0 h-96 w-auto pt-12"/>
+	</div>
+	@Guess()
+}
+
+templ Guess() {
+	<div class="flex items-center justify-center">
+		<form class="flex" hx-post="/guess" hx-target="#bw-image" hx-swap="outerHTML">
+			<input type="text" name="guessForm" id="guessForm" placeholder="Guess the Pokédex" class="px-4 py-2 mr-2 border border-pkmnfg rounded-md focus:outline-none focus:border-pkmnfg w-80 bg-pkmnfg2 text-pkmnfg"/>
+			<button type="submit" class="flex items-center px-4 py-2 bg-pkmnfg2 text-pkmnfg rounded-md hover:bg-pkmnfg hover:text-pkmnfg2 border border-pkmnfg">
+				Guess            
+			</button>
+		</form>
+	</div>
+}
+
+templ PokemonBWImage(pokemon db.Pokemon, tries int) {
+	<div id="bw-image" class="h-96 w-full flex justify-center items-center relative">
+		<div class="absolute top-0 left-0 w-full text-center py-4">
+			<div>Tries: { strconv.Itoa(tries) }</div>
+			<div class="text-fire">Incorrect Guess</div>
+		</div>
+		<img src={ fmt.Sprintf("static/assets/gen-%d/%s.png", pokemon.Gen, pokemon.Id) } alt="pokemon-image" class="filter grayscale brightness-0 h-96 w-auto pt-12"/>
+	</div>
+}
+
+templ PokemonColorImage(pokemon db.Pokemon) {
+	<div id="bw-image" class="h-96 w-full flex justify-center items-center relative">
+		<div class="absolute top-0 left-0 w-full text-center py-4">
+			<div class="text-2xl mb-10 text-grass">
+				Its { pokemon.Name }!
+			</div>
+		</div>
+		<img id="color-image" src={ fmt.Sprintf("static/assets/gen-%d/%s.png", pokemon.Gen, pokemon.Id) } alt="pokemon-image" class="h-96 w-auto pt-12"/>
+	</div>
 }

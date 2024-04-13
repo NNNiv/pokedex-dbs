@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"math/rand"
 	"os"
 
 	"github.com/go-sql-driver/mysql"
@@ -52,6 +53,10 @@ type Pokemon struct {
 	Spd    int
 	Total  int
 	Entry  string
+}
+
+func ExecuteQuery(query string) (*sql.Rows, error) {
+	return database.Query(query)
 }
 
 func GetPokemonByName(name string) (Pokemon, error) {
@@ -126,4 +131,29 @@ func GetPokemonByID(id string) (Pokemon, error) {
 		pokemon.Type2 = nil
 	}
 	return pokemon, nil
+}
+
+func GetRandomPokemon() (Pokemon, error) {
+	var pokemon Pokemon
+
+	pokemonID := rand.Intn(721)
+	pokemonID += 1
+	var pokemonIDStr string
+
+	if pokemonID < 10 {
+		pokemonIDStr = fmt.Sprintf("00%d", pokemonID)
+	} else if pokemonID < 100 {
+		pokemonIDStr = fmt.Sprintf("0%d", pokemonID)
+	} else {
+		pokemonIDStr = fmt.Sprintf("%d", pokemonID)
+	}
+
+	pokemon, err := GetPokemonByID(pokemonIDStr)
+
+	if err != nil {
+		return pokemon, fmt.Errorf("getRandomPokemon: %v", err)
+	}
+
+	return pokemon, nil
+
 }

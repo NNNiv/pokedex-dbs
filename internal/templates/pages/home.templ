@@ -2,16 +2,22 @@ package pages
 
 import "github.com/NNNiv/pokedex/internal/templates/layouts"
 import "github.com/NNNiv/pokedex/internal/templates/components"
+import "github.com/NNNiv/pokedex/db"
+import "fmt"
 
+// import "github.com/NNNiv/pokedex/internal/templates/components"
 templ Home() {
-	@layouts.Layout()
-	@searchBar()
-	@components.AdvancedSearch()
+	@layouts.Layout() {
+		<div class="mt-10">
+			@SearchBar()
+			<div id="result"></div>
+		</div>
+	}
 }
 
-templ searchBar() {
-	<div class="flex items-center mt-10">
-		<form class="flex" hx-post="/search">
+templ SearchBar() {
+	<div class="flex items-center justify-center">
+		<form class="flex" hx-post="/search" hx-target="#result">
 			<input type="text" name="searchForm" id="searchForm" placeholder="Search for a Pokémon" class="px-4 py-2 mr-2 border border-pkmnfg rounded-md focus:outline-none focus:border-pkmnfg w-80 bg-pkmnfg2 text-pkmnfg"/>
 			<button type="submit" class="flex items-center px-4 py-2 bg-pkmnfg2 text-pkmnfg rounded-md hover:bg-pkmnfg hover:text-pkmnfg2 border border-pkmnfg">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search w-6 h-6">
@@ -21,31 +27,50 @@ templ searchBar() {
 			</button>
 		</form>
 	</div>
-	<button class="mt-10 text-pkmnfg">Advanced search</button>
 }
 
-// <img src="static/assets/gen-1/001.png" alt=""/>
-/*
-
-templ searchBar() {
-	<div class="flex items-center mt-10">
-		<form action="/clicked" method="POST">
-			<input type="text" id="search-form" placeholder="Search for a Pokémon" class="px-4 py-2 mr-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 w-80"/>
-			<button
-				type="submit"
-				class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600sstatic
-    "
-			>
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search w-6 h-6">
-					<circle cx="11" cy="11" r="8"></circle>
-					<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-				</svg>
-			</button>
-		</form>
+//templ Result(pokemon db.Pokemon) {
+//	<img src={ fmt.Sprintf("static/assets/gen-%d/%s.png", pokemon.Gen, pokemon.Id) } alt="pokemon-image"/>
+//	<div class="text-2xl text-pkmnfg">{ pokemon.Name }</div>
+//	if pokemon.Type2 != nil {
+//		<div>
+//			@components.TypeComponent(pokemon.Type1)
+//			@components.TypeComponent(*pokemon.Type2)
+//		</div>
+//	} else {
+//		<div>{ pokemon.Type1 }</div>
+//	}
+//	<div class="text-pkmnfg">{ pokemon.Entry }</div>
+//}
+//templ Result(pokemon db.Pokemon) {
+//	<div class="flex items-center justify-start">
+//		<img src={ fmt.Sprintf("static/assets/gen-%d/%s.png", pokemon.Gen, pokemon.Id) } alt="pokemon-image" class="ml-96 mr-4 w-1/2 h-1/2"/>
+//		<div>
+//			<div class="ml-text-3xl text-pkmnfg font-semibold">{ pokemon.Name }</div>
+//			<div class="text-pkmnfg">{ pokemon.Entry }</div>
+//		</div>
+//	</div>
+//	<div class="mt-4 grid grid-cols-2 gap-4">
+//		@components.TypeComponent(pokemon.Type1)
+//		if pokemon.Type2 != nil {
+//			@components.TypeComponent(*pokemon.Type2)
+//		}
+//	</div>
+//}
+templ Result(pokemon db.Pokemon) {
+	<div class="flex items-center">
+		<img src={ fmt.Sprintf("static/assets/gen-%d/%s.png", pokemon.Gen, pokemon.Id) } alt="pokemon-image" class="ml-8 mr-4 w-1/2 h-1/2"/>
+		<div>
+			<div class="text-4xl text-pkmnfg font-semibold mb-10">{ pokemon.Name }</div>
+			<div class="mt-4 grid grid-cols-2">
+				@components.TypeComponent(pokemon.Type1)
+				if pokemon.Type2 != nil {
+					@components.TypeComponent(*pokemon.Type2)
+				}
+			</div>
+			<div class="text-pkmnfg w-1/4">{ pokemon.Entry }</div>
+		</div>
 	</div>
-	<button class="mt-10">
-		Advanced search
-	</button>
 }
 
-*/
+// <img src={ fmt.Sprintf("static/assets/gen-%d/%s.png", pokemon.Gen, pokemon.Id) } alt="pokemon-image" class="filter grayscale brightness-0"/>
