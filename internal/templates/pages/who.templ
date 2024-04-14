@@ -12,7 +12,7 @@ templ Who(pokemon db.Pokemon, tries int) {
 	<div class="mt-10 text-2xl text-pkmnfg">Who's that Pokémon?</div>
 	<div id="bw-image" class="h-96 w-full flex justify-center items-center relative">
 		<div class="absolute top-0 left-0 w-full text-center py-4">
-			<div>Tries: { strconv.Itoa(tries) }</div>
+			<div class="text-ice">Tries: { strconv.Itoa(tries) }</div>
 			<div class="text-fire"></div>
 		</div>
 		<img src={ fmt.Sprintf("static/assets/gen-%d/%s.png", pokemon.Gen, pokemon.Id) } alt="pokemon-image" class="filter grayscale brightness-0 h-96 w-auto pt-12"/>
@@ -34,8 +34,8 @@ templ Guess() {
 templ PokemonBWImage(pokemon db.Pokemon, tries int) {
 	<div id="bw-image" class="h-96 w-full flex justify-center items-center relative">
 		<div class="absolute top-0 left-0 w-full text-center py-4">
-			<div>Tries: { strconv.Itoa(tries) }</div>
-			<div class="text-fire">Incorrect Guess</div>
+			<div class="text-ice">Tries: { strconv.Itoa(tries) }</div>
+			<div class="text-error">Incorrect Guess</div>
 		</div>
 		<img src={ fmt.Sprintf("static/assets/gen-%d/%s.png", pokemon.Gen, pokemon.Id) } alt="pokemon-image" class="filter grayscale brightness-0 h-96 w-auto pt-12"/>
 	</div>

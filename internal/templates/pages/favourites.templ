@@ -1,0 +1,40 @@
+package pages
+
+import "github.com/NNNiv/pokedex/internal/templates/layouts"
+import "github.com/NNNiv/pokedex/db"
+import "fmt"
+import "slices"
+
+var renderedPokemon []db.Pokemon
+
+templ Favourites(favourites []db.Pokemon) {
+	@layouts.Layout()
+	<div class="text-xl text-pkmnfg mt-10 mb-10 flex justify-center items-center">Favourited Pokemon</div>
+	<div id="#favourites">
+		@ListFavourites(favourites)
+	</div>
+}
+
+templ DeleteFavourite() {
+	<button class="bg-error w-24 rounded-md" hx-post="/delete-favourite" hx-target="#favourites">Remove</button>
+}
+
+templ ListFavourites(favourites []db.Pokemon) {
+	<ul>
+		for _, favourite := range favourites {
+			if !slices.Contains(renderedPokemon, favourite) {
+				<li class="grid grid-cols-4 gap-4 mt-5 justify-center items-center">
+					<img src={ fmt.Sprintf("static/assets/gen-%d/%s.png", favourite.Gen, favourite.Id) } alt="pokemon-image" class="w-10 h-10"/>
+					<div class="grid grid-cols-2 gap-2">
+						@TypeComponent(favourite.Type1)
+						if favourite.Type2 != nil {
+							@TypeComponent(*favourite.Type2)
+						}
+					</div>
+					<div class="text-grass">{ favourite.Name }</div>
+					@DeleteFavourite()
+				</li>
+			}
+		}
+	</ul>
+}

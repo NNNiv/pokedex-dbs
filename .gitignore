@@ -1,5 +1,5 @@
 node_modules
 tmp
-/internal/templates/**/*.go
+/internal/templates/**/*_templ.go
 /static/css/style.css
 .env

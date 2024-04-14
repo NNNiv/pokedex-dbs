@@ -3,9 +3,13 @@ package components
 import "strings"
 import "fmt"
 
-templ TypeComponent(pkmntype string) {
+templ typeComponent(pkmntype string) {
 	<button class={ fmt.Sprintf("bg-%s rounded-md w-28 flex justify-center", strings.ToLower(pkmntype)) }>{ pkmntype }</button>
 }
+
+//templ TypeComponent(pkmntype string) {
+//	<button class={ "bg-" + strings.ToLower(pkmntype) + " rounded-md w-28 flex justify-center" }>{ pkmntype }</button>
+//}
 
 //templ ShowAdvancedSearch() {
 //	<div class="flex justify-center items-center mt-10">

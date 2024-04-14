@@ -28,6 +28,10 @@ CREATE TABLE dex_entries (
   entry1 varchar(300),
 );
 
+CREATE TABLE favourites (
+  id varchar(4) PRIMARY KEY
+);
+
 ALTER TABLE dex ADD FOREIGN KEY (type_1) REFERENCES types (type);
 
 ALTER TABLE dex ADD FOREIGN KEY (type_2) REFERENCES types (type);
@@ -35,3 +39,5 @@ ALTER TABLE dex ADD FOREIGN KEY (type_2) REFERENCES types (type);
 ALTER TABLE stats ADD FOREIGN KEY (id) REFERENCES dex (id);
 
 ALTER TABLE dex_entries ADD FOREIGN KEY (id) REFERENCES dex (id);
+
+ALTER TABLE favourites ADD FOREIGN KEY (id) REFERENCES dex (id);

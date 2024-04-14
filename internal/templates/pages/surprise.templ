@@ -1,7 +1,38 @@
 package pages 
 
 import "github.com/NNNiv/pokedex/internal/templates/layouts"
+import "github.com/NNNiv/pokedex/db"
+import "fmt"
 
-templ Surprise() {
+templ Surprise(pokemon db.Pokemon) {
 	@layouts.Layout()
+	<div class="mt-10">
+		@Dummy()
+		<div id="surprise"></div>
+	</div>
+}
+
+templ Dummy() {
+	<div class="flex items-center justify-center">
+		<form class="flex" hx-post="/surprise-pokemon" hx-target="#surprise">
+			<input type="text" name="dummyForm" id="dummyForm" placeholder="Enter something about you  :)" class="px-4 py-2 mr-2 border border-pkmnfg rounded-md focus:outline-none focus:border-pkmnfg w-auto bg-pkmnfg2 text-pkmnfg"/>
+			<button type="submit" class="flex items-center px-4 py-2 bg-pkmnfg2 text-pkmnfg rounded-md hover:bg-pkmnfg hover:text-pkmnfg2 border border-pkmnfg">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search w-6 h-6">
+					<circle cx="11" cy="11" r="8"></circle>
+					<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+				</svg>
+			</button>
+		</form>
+	</div>
+}
+
+templ PokemonImage(pokemon db.Pokemon) {
+	<div id="bw-image" class="h-96 w-full flex justify-center items-center relative">
+		<div class="absolute top-0 left-0 w-full text-center py-4">
+			<div class="text-2xl text-fairy w-auto">
+				You give off { pokemon.Name } vibes!
+			</div>
+		</div>
+		<img id="color-image" src={ fmt.Sprintf("static/assets/gen-%d/%s.png", pokemon.Gen, pokemon.Id) } alt="pokemon-image" class="h-96 w-auto pt-16"/>
+	</div>
 }
